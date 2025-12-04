@@ -476,7 +476,13 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+#Arquivos de configuração sensíveis
+appsettings.json
+appsettings.Development.json
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,dotnetcore,visualstudio
+/appsettings.Development.json
+/appsettings.json
