@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MinimalApi.DTOs;
 using MinimalApi.Infrastructure.Database;
+using MinimalAPI.Domain.Interfaces;
+using MinimalAPI.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddDbContext<ContextDb>(options => {
     options.UseMySql(
@@ -15,9 +20,9 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Seja bem-vindo!");
 
-app.MapPost("/login", (LoginDTO loginDTO) =>
+app.MapPost("/login", ([FromBody] LoginDTO loginDTO, IAdminService adminService) =>
 {
-    if (loginDTO.Email == "adm@teste.com" && loginDTO.Senha == "123456")
+    if (adminService.Login(loginDTO) != null)
     {
         return Results.Ok("Login com sucesso");
     }
